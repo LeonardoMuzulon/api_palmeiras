@@ -3,7 +3,7 @@ const moment = require("moment");
 const cryptoJS = require("crypto-js");
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const authClientId = "20047";
 const secretAPIKey = "bAatbkfpL9s2*";
@@ -25,4 +25,8 @@ app.get("/gerar-token/:cpf", (req, res) => {
     authHash,
     authDateTime,
   });
+});
+
+app.listen(port, () => {
+  console.log(`API rodando em http://localhost:${port}`);
 });
