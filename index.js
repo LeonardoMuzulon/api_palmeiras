@@ -9,7 +9,7 @@ const authClientId = "20047";
 const secretAPIKey = "bAatbkfpL9s2*";
 
 app.get("/gerar-token/:cpf", (req, res) => {
-  const cpf = req.params.cpf;
+  const cpf = req.params.cpf.replace(/\D/g, "");
 
   if (!cpf || cpf.length !== 11) {
     return res.status(400).json({ error: "CPF inválido" });
@@ -25,8 +25,4 @@ app.get("/gerar-token/:cpf", (req, res) => {
     authHash,
     authDateTime,
   });
-});
-
-app.listen(port, () => {
-  console.log(`Servidor rodando na porta ${port}`);
 });
