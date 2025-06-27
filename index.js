@@ -15,7 +15,7 @@ app.get("/gerar-token/:cpf", (req, res) => {
     return res.status(400).json({ error: "CPF inválido" });
   }
 
-  const authDateTime = moment.utc().format("YYYY-MM-DD HH:mm:ss");
+  const authDateTime = moment.utc().format("YYYY-MM-DD HH:mm:ss") + " ";
   const query = `authClientID=${authClientId}&identifier=${cpf}&authDateTime=${authDateTime}`;
 
   const hash = cryptoJS.SHA256(cryptoJS.enc.Utf8.parse(query + secretAPIKey));
@@ -23,7 +23,7 @@ app.get("/gerar-token/:cpf", (req, res) => {
 
   return res.json({
     authHash,
-    authDateTime,
+    authDateTime: authDateTime.trim() 
   });
 });
 
