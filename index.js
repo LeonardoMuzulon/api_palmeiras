@@ -8,6 +8,10 @@ const port = process.env.PORT || 3000;
 const authClientId = "20047";
 const secretAPIKey = "bAatbkfpL9s2*";
 
+app.get("/ping", (req, res) => {
+  res.status(200).send("pong");
+});
+
 app.get("/gerar-token/:cpf", (req, res) => {
   const cpf = req.params.cpf.replace(/\D/g, "");
 
@@ -23,7 +27,7 @@ app.get("/gerar-token/:cpf", (req, res) => {
 
   return res.json({
     authHash,
-    authDateTime: authDateTime.trim() 
+    authDateTime: authDateTime.trim()
   });
 });
 
