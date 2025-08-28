@@ -30,11 +30,11 @@ app.get("/gerar-token/:numero/:tipo", (req, res) => {
   let query, url;
 
   if (tipo === "memberships") {
-    // Para GetUserMemberships
+    // GetUserMemberships
     query = `authClientId=${authClientId}&userId=${numero}&authDateTime=${authDateTime}`;
     url = `https://ingressospalmeiras.com.br/Api/GetUserMemberships?authClientId=${authClientId}&userId=${numero}&authDateTime=${encodeURIComponent(authDateTime)}&authHash=`;
   } else if (tipo === "ex") {
-    // Para GetUserExByIdentifier
+    // GetUserExByIdentifier
     authDateTime += " "; // espaço obrigatório para 'ex'
     query = `authClientID=${authClientId}&identifier=${numero}&authDateTime=${authDateTime}`;
     url = `https://ingressospalmeiras.com.br/Api/GetUserExByIdentifier?authClientID=${authClientId}&identifier=${numero}&authDateTime=${encodeURIComponent(authDateTime)}&authHash=`;
@@ -42,11 +42,11 @@ app.get("/gerar-token/:numero/:tipo", (req, res) => {
     return res.status(400).json({ error: "Tipo inválido. Use 'memberships' ou 'ex'." });
   }
 
-  // Gera o hash SHA256 + Base64
+  // Gera hash SHA256 + Base64
   const hash = cryptoJS.SHA256(cryptoJS.enc.Utf8.parse(query + secretAPIKey));
   const authHash = cryptoJS.enc.Base64.stringify(hash);
 
-  // Retorna o hash, authDateTime e URL completa
+  // Retorna hash, authDateTime e URL completa
   return res.json({
     authHash,
     authDateTime: authDateTime.trim(),
