@@ -12,15 +12,11 @@ app.get("/ping", (req, res) => {
   res.status(200).send("pong");
 });
 
-app.get("/gerar-token/:cpf", (req, res) => {
-  const cpf = req.params.cpf.replace(/\D/g, "");
-
-  if (!cpf || cpf.length !== 11) {
-    return res.status(400).json({ error: "CPF inválido" });
-  }
+app.get("/gerar-token/:numero", (req, res) => {
+  const numero = req.params.numero.replace(/\D/g, "");
 
   const authDateTime = moment.utc().format("YYYY-MM-DD HH:mm:ss") + " ";
-  const query = `authClientID=${authClientId}&identifier=${cpf}&authDateTime=${authDateTime}`;
+  const query = `authClientID=${authClientId}&identifier=${numero}&authDateTime=${authDateTime}`;
 
   const hash = cryptoJS.SHA256(cryptoJS.enc.Utf8.parse(query + secretAPIKey));
   const authHash = cryptoJS.enc.Base64.stringify(hash);
